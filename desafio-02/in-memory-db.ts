@@ -1,3 +1,5 @@
+import { IUserRepository } from "./interfaces";
+
 export interface User {
 	id: number;
 	name: string;
@@ -5,7 +7,7 @@ export interface User {
 	password: string;
 }
 
-export class InMemoryDb {
+export class InMemoryDb implements IUserRepository {
 	private readonly data: User[] = [];
 
 	async create(user: User): Promise<User> {

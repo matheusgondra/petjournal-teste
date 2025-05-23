@@ -1,23 +1,21 @@
-import { HashService } from "./hash-service";
-import { InMemoryDb } from "./in-memory-db";
+import { IHashService, IUserRepository } from "./interfaces";
 
 export class Service {
 	constructor(
-		private readonly hashService: HashService,
-		private readonly inMemoryDb: InMemoryDb
+		private readonly hashService: IHashService,
+		private readonly userRepository: IUserRepository
 	) {}
 
 	async execute(data: any) {
-		const hashedData = await this.hashService.hash(data.password);
+		const hashedPassword = await this.hashService.hash(data.password);
+
 		const user = {
 			id: 1,
 			name: data.name,
 			email: data.email,
-			password: hashedData,
+			password: hashedPassword,
 		};
 
-		const createdUser = await this.inMemoryDb.create(user);
-
-		return createdUser;
+		return this.userRepository.create(user);
 	}
 }

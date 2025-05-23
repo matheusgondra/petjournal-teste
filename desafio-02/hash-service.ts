@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
+import { IHashService } from "./interfaces";
 
-export class HashService {
+export class HashService implements IHashService {
 	private readonly salt: number = 12;
 
 	async hash(value: any): Promise<string> {
